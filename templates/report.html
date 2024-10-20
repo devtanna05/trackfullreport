@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Report</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Google Skill Boost Progress Reports</h1>
+
+        <form action="/export_pdf" method="POST">
+            <input type="hidden" name="results_data" value="{{ results }}">
+            <button type="submit">Download PDF</button>
+        </form>
+        
+        <form action="/export_csv" method="POST">
+            <input type="hidden" name="results_data" value="{{ results }}">
+            <button type="submit">Download CSV</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Profile Name</th>
+                    <th>Profile URL</th>
+                    <th>Progress (%)</th>
+                    <th>Missing Courses</th>
+                    <th>Error</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.profile_name }}</td>
+                    <td><a href="{{ result.profile_url }}" target="_blank">{{ result.profile_url }}</a></td>
+                    <td>{{ result.progress }}%</td>
+                    <td>{{ result.missing_count }}</td>
+                    <td>{{ result.error }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="/">Upload another CSV</a>
+    </div>
+</body>
+</html>
